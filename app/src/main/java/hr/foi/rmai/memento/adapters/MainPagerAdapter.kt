@@ -20,16 +20,12 @@ class MainPagerAdapter(fragmentManager : FragmentManager,
                             val iconRes : Int,
                             val fragmentClass: KClass<*>)
 
-    val fragmentItems =
-        listOf(FragmentItem(R.string.tasks_pending,
-                            R.drawable.baseline_assignment_late_24,
-                            PendingFragment::class),
-               FragmentItem(R.string.tasks_completed,
-                            R.drawable.baseline_assignment_turned_in_24,
-                            CompletedFragment::class),
-               FragmentItem(R.string.news,
-                            R.drawable.baseline_assignment_24,
-                            NewsFragment::class))
+    val fragmentItems = ArrayList<FragmentItem>()
+
+    fun addFragment(fragment: FragmentItem) {
+        fragmentItems.add(fragment)
+    }
+
 
     override fun getItemCount(): Int = fragmentItems.size
 
