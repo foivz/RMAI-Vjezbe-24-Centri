@@ -6,8 +6,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import hr.foi.rmai.memento.R
+import hr.foi.rmai.memento.adapters.TasksAdapter
 import hr.foi.rmai.memento.helpers.MockDataLoader
 
 class PendingFragment : Fragment() {
@@ -27,6 +29,8 @@ class PendingFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         recyclerView = view.findViewById(R.id.rv_pending_tasks)
+        recyclerView.adapter = TasksAdapter(mockTasks)
+        recyclerView.layoutManager = LinearLayoutManager(view.context)
     }
 }
 
