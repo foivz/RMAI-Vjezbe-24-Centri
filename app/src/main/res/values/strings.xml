@@ -3,4 +3,8 @@
     <string name="tasks_pending">PENDING</string>
     <string name="tasks_completed">COMPLETED</string>
     <string name="news">NEWS</string>
+    <string name="task_name">Task name</string>
+    <string name="date">Date</string>
+    <string name="time">Time</string>
+    <string name="category">Category</string>
 </resources>
