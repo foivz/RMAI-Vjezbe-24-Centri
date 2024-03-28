@@ -13,6 +13,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import hr.foi.rmai.memento.R
 import hr.foi.rmai.memento.adapters.TasksAdapter
 import hr.foi.rmai.memento.helpers.MockDataLoader
+import hr.foi.rmai.memento.helpers.NewTaskDialogHelper
 
 class PendingFragment : Fragment() {
     private val mockTasks = MockDataLoader.getDemoData()
@@ -44,9 +45,15 @@ class PendingFragment : Fragment() {
     private fun showDialog() {
         val newTaskDialogView = LayoutInflater.from(context).inflate(R.layout.new_task_dialog, null)
 
+        val dialogHelper = NewTaskDialogHelper(newTaskDialogView)
+        dialogHelper.populateSpinner(MockDataLoader.getDemoCategories())
+
         AlertDialog.Builder(context)
             .setView(newTaskDialogView)
             .setTitle("Create a new task")
+            .setPositiveButton("Create a new task") { _,_ ->
+                val newTask = dialogHelper.buildTask()
+            }
             .show()
     }
 }

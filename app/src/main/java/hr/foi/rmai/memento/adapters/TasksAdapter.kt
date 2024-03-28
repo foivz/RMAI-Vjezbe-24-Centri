@@ -11,7 +11,7 @@ import hr.foi.rmai.memento.R
 import hr.foi.rmai.memento.entities.Task
 import java.text.SimpleDateFormat
 
-class TasksAdapter(val tasksList : List<Task>) : RecyclerView.Adapter<TasksAdapter.TaskViewHolder>() {
+class TasksAdapter(val tasksList : MutableList<Task>) : RecyclerView.Adapter<TasksAdapter.TaskViewHolder>() {
     inner class TaskViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         private val taskName: TextView
         private val taskDueDate: TextView

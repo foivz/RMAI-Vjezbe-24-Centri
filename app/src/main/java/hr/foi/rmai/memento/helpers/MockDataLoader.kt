@@ -12,10 +12,10 @@ object MockDataLoader {
         TaskCategory("OS", "#CCCCCC")
     )
 
-    fun getDemoData() : List<Task> {
+    fun getDemoData() : MutableList<Task> {
         val categories = getDemoCategories()
 
-        return listOf(
+        return mutableListOf(
             Task("Submit seminar paper", Date(), categories[0], false),
             Task("Prepare for excerises", Date(), categories[0], false),
             Task("Rally a project name", Date(), categories[2], false),
