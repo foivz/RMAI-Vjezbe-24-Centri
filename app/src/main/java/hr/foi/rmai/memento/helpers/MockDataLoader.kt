@@ -5,17 +5,20 @@ import hr.foi.rmai.memento.entities.TaskCategory
 import java.util.Date
 
 object MockDataLoader {
-    fun getDemoData() : List<Task> = listOf(
-        Task("Submit seminar paper", Date(),
-            TaskCategory("EP", "#000000"), false),
-
-        Task("Prepare for excerises", Date(),
-            TaskCategory("SIS", "#FF0000"), false),
-
-        Task("Rally a project name", Date(),
-            TaskCategory("RMAI", "#000080"), false),
-
-        Task("Connect to server", Date(),
-            TaskCategory("OS", "#CCCCCC"), false)
+    fun getDemoCategories() : List<TaskCategory> = listOf(
+        TaskCategory("EP", "#000000"),
+        TaskCategory("SIS", "#FF0000"),
+        TaskCategory("RMAI", "#000080"),
+        TaskCategory("OS", "#CCCCCC")
     )
+
+    fun getDemoData() : List<Task> {
+        val categories = getDemoCategories()
+
+        return listOf(
+            Task("Submit seminar paper", Date(), categories[0], false),
+            Task("Prepare for excerises", Date(), categories[0], false),
+            Task("Rally a project name", Date(), categories[2], false),
+            Task("Connect to server", Date(), categories[3], false))
+    }
 }
