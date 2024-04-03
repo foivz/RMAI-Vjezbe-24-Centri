@@ -55,6 +55,8 @@ class PendingFragment : Fragment() {
             .setTitle("Create a new task")
             .setPositiveButton("Create a new task") { _,_ ->
                 val newTask = dialogHelper.buildTask()
+                val tasksAdapter = recyclerView.adapter as TasksAdapter
+                tasksAdapter.addTask(newTask)
             }
             .show()
     }

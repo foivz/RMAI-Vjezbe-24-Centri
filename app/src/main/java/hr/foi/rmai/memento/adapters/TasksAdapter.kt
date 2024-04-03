@@ -46,4 +46,17 @@ class TasksAdapter(val tasksList : MutableList<Task>) : RecyclerView.Adapter<Tas
     override fun onBindViewHolder(holder: TaskViewHolder, position: Int) {
         holder.bind(tasksList[position])
     }
+
+    fun addTask(newTask: Task) {
+        var newIndexInList = tasksList.indexOfFirst {
+            task -> task.dueDate > newTask.dueDate
+        }
+
+        if (newIndexInList == -1) {
+            newIndexInList = tasksList.size
+        }
+
+        tasksList.add(newIndexInList, newTask)
+        notifyItemInserted(newIndexInList)
+    }
 }
