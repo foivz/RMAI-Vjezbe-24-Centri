@@ -48,6 +48,8 @@ class PendingFragment : Fragment() {
         val dialogHelper = NewTaskDialogHelper(newTaskDialogView)
         dialogHelper.populateSpinner(MockDataLoader.getDemoCategories())
 
+        dialogHelper.activateDateTimeListener()
+
         AlertDialog.Builder(context)
             .setView(newTaskDialogView)
             .setTitle("Create a new task")
