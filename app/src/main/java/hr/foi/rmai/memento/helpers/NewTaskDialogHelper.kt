@@ -32,7 +32,7 @@ class NewTaskDialogHelper(val view:View) {
         val newTaskName = etName.text.toString()
         val selectedCategory = spinner.selectedItem as TaskCategory
 
-        return Task(newTaskName, selectedDateTime.time, selectedCategory, false)
+        return Task(0, newTaskName, selectedDateTime.time, selectedCategory.id, false)
     }
 
     fun activateDateTimeListener() {
