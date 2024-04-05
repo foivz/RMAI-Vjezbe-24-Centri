@@ -8,9 +8,11 @@ import com.google.android.material.navigation.NavigationView
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import hr.foi.rmai.memento.adapters.MainPagerAdapter
+import hr.foi.rmai.memento.database.TasksDatabase
 import hr.foi.rmai.memento.fragments.CompletedFragment
 import hr.foi.rmai.memento.fragments.NewsFragment
 import hr.foi.rmai.memento.fragments.PendingFragment
+import hr.foi.rmai.memento.helpers.MockDataLoader
 
 class MainActivity : AppCompatActivity() {
     lateinit var tabLayout : TabLayout
@@ -39,6 +41,9 @@ class MainActivity : AppCompatActivity() {
             navDrawerLayout.closeDrawers()
             return@setNavigationItemSelectedListener true
         }
+
+        TasksDatabase.buildInstance(applicationContext)
+        MockDataLoader.loadMockData()
     }
 
     fun connectViewPagerWithLayout() {
