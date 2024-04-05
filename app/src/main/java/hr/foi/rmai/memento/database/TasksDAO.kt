@@ -10,7 +10,7 @@ import hr.foi.rmai.memento.entities.Task
 @Dao
 interface TasksDAO {
     @Query("SELECT * FROM tasks WHERE id = :id")
-    fun getTask(id: Int): Task
+    fun getTask(id: Long): Task
     @Query("SELECT * FROM tasks WHERE completed = :completed ORDER BY due_date ASC")
     fun getAllTasks(completed: Boolean): List<Task>
     @Insert(onConflict = REPLACE)

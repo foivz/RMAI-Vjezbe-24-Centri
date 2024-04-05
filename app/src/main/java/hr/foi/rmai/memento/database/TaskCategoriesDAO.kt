@@ -12,5 +12,5 @@ interface TaskCategoriesDAO {
     @Query("SELECT * FROM task_categories WHERE id = :id")
     fun getCategoryById(id: Int): TaskCategory
     @Insert
-    fun insertCategory(category: TaskCategory)
+    fun insertCategory(vararg category: TaskCategory)
 }
