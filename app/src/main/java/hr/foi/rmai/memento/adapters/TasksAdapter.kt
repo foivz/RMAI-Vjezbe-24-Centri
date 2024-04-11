@@ -1,5 +1,6 @@
 package hr.foi.rmai.memento.adapters
 
+import android.app.AlertDialog
 import android.view.LayoutInflater
 import android.view.SurfaceView
 import android.view.View
@@ -8,6 +9,7 @@ import android.widget.TextView
 import androidx.core.graphics.toColorInt
 import androidx.recyclerview.widget.RecyclerView
 import hr.foi.rmai.memento.R
+import hr.foi.rmai.memento.database.TasksDatabase
 import hr.foi.rmai.memento.entities.Task
 import java.text.SimpleDateFormat
 
@@ -23,6 +25,32 @@ class TasksAdapter(val tasksList : MutableList<Task>) : RecyclerView.Adapter<Tas
             taskName = view.findViewById(R.id.tv_task_name)
             taskDueDate = view.findViewById(R.id.tv_task_due_date)
             taskCategory = view.findViewById(R.id.sv_task_category_color)
+
+            view.setOnLongClickListener {
+                AlertDialog.Builder(view.context)
+                    .setPositiveButton("Mark as completed") { _,_ ->
+                        val completedTask = tasksList[adapterPosition]
+                        completedTask.completed = true
+                        TasksDatabase.getInstance().getTasksDao().insertTask(completedTask)
+                        removeTaskFromList()
+                    }
+                    .setNegativeButton("Delete task") { _,_ ->
+                        val deletedTask = tasksList[adapterPosition]
+                        TasksDatabase.getInstance().getTasksDao().removeTask(deletedTask)
+                        removeTaskFromList()
+                    }
+                    .setNeutralButton("Cancel") { dialog, _ ->
+                        dialog.cancel()
+                    }
+                    .show()
+
+                true
+            }
+        }
+
+        private fun removeTaskFromList() {
+            tasksList.removeAt(adapterPosition)
+            notifyItemRemoved(adapterPosition)
         }
 
         fun bind(task: Task) {
