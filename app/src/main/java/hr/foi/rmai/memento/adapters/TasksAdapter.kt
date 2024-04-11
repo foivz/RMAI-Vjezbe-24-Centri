@@ -13,7 +13,9 @@ import hr.foi.rmai.memento.database.TasksDatabase
 import hr.foi.rmai.memento.entities.Task
 import java.text.SimpleDateFormat
 
-class TasksAdapter(val tasksList : MutableList<Task>) : RecyclerView.Adapter<TasksAdapter.TaskViewHolder>() {
+class TasksAdapter(val tasksList : MutableList<Task>,
+                   val onTaskCompleted: ((taskId: Int) -> Unit)? = null
+                   ) : RecyclerView.Adapter<TasksAdapter.TaskViewHolder>() {
     inner class TaskViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         private val taskName: TextView
         private val taskDueDate: TextView
@@ -27,22 +29,29 @@ class TasksAdapter(val tasksList : MutableList<Task>) : RecyclerView.Adapter<Tas
             taskCategory = view.findViewById(R.id.sv_task_category_color)
 
             view.setOnLongClickListener {
-                AlertDialog.Builder(view.context)
-                    .setPositiveButton("Mark as completed") { _,_ ->
-                        val completedTask = tasksList[adapterPosition]
-                        completedTask.completed = true
-                        TasksDatabase.getInstance().getTasksDao().insertTask(completedTask)
-                        removeTaskFromList()
-                    }
-                    .setNegativeButton("Delete task") { _,_ ->
-                        val deletedTask = tasksList[adapterPosition]
-                        TasksDatabase.getInstance().getTasksDao().removeTask(deletedTask)
+                val currentTask = tasksList[adapterPosition]
+
+                val alertDialogBuilder = AlertDialog.Builder(view.context)
+                    .setNegativeButton("Delete task") { _, _ ->
+                        TasksDatabase.getInstance().getTasksDao().removeTask(currentTask)
                         removeTaskFromList()
                     }
                     .setNeutralButton("Cancel") { dialog, _ ->
                         dialog.cancel()
                     }
-                    .show()
+
+
+                if (onTaskCompleted != null) {
+                    alertDialogBuilder.setPositiveButton("Mark as completed") { _, _ ->
+                        currentTask.completed = true
+                        TasksDatabase.getInstance().getTasksDao().insertTask(currentTask)
+                        removeTaskFromList()
+
+                        onTaskCompleted.invoke(currentTask.id)
+                    }
+                }
+
+                alertDialogBuilder.show()
 
                 true
             }
