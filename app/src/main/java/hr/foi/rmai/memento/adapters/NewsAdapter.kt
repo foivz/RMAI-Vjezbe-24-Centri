@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.squareup.picasso.Picasso
 import hr.foi.rmai.memento.R
 import hr.foi.rmai.memento.ws.NewsItem
 import hr.foi.rmai.memento.ws.WsNews
@@ -36,7 +37,7 @@ class NewsAdapter(val newsList: List<NewsItem>) : RecyclerView.Adapter<NewsAdapt
             text.text = newsItem.text
             dateTime.text = newsItem.date
 
-            CoroutineScope(Dispatchers.IO).launch {
+            /*CoroutineScope(Dispatchers.IO).launch {
                 val image : Bitmap
                 val imageURL = URL(WsNews.BASE_URL + newsItem.imagePath)
                 image = BitmapFactory.decodeStream(imageURL.openStream())
@@ -44,8 +45,9 @@ class NewsAdapter(val newsList: List<NewsItem>) : RecyclerView.Adapter<NewsAdapt
                 withContext(Dispatchers.Main) {
                     imageView.setImageBitmap(image)
                 }
-            }
-
+            }*/
+            Picasso.get().load(WsNews.BASE_URL + newsItem.imagePath)
+                .into(imageView)
         }
     }
 

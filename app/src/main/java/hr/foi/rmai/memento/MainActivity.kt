@@ -1,7 +1,11 @@
 package hr.foi.rmai.memento
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.annotation.RequiresApi
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.navigation.NavigationView
@@ -21,6 +25,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var navDrawerLayout : DrawerLayout
     lateinit var navView : NavigationView
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -44,6 +49,16 @@ class MainActivity : AppCompatActivity() {
 
         TasksDatabase.buildInstance(applicationContext)
         MockDataLoader.loadMockData()
+
+        createNotificationChannel()
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun createNotificationChannel() {
+        val channel = NotificationChannel("task-timer",
+                        "Task Timer Channel", NotificationManager.IMPORTANCE_HIGH)
+        val notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+        notificationManager.createNotificationChannel(channel)
     }
 
     fun connectViewPagerWithLayout() {
