@@ -23,12 +23,12 @@ import java.util.Date
     ])
 @TypeConverters(DateConverter::class)
 data class Task(
-    @PrimaryKey(autoGenerate = true) val id : Int,
+    @PrimaryKey(autoGenerate = true) val id : Long,
     val name : String,
     @ColumnInfo(name="due_date")
     val dueDate : Date,
     @ColumnInfo(name="category_id", index = true)
-    val categoryId : Int,
+    val categoryId : Long,
     var completed : Boolean
 ) {
     @delegate:Ignore
