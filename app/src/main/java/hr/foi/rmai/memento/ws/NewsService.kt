@@ -5,5 +5,5 @@ import retrofit2.http.GET
 
 interface NewsService {
     @GET("news.php")
-    fun getName() : Call<NewsResponse>
+    fun getNews() : Call<NewsResponse>
 }
