@@ -1,10 +1,15 @@
 package hr.foi.rmai.memento
 
+import android.app.AlarmManager
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.app.PendingIntent
+import android.content.Context
+import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.SystemClock
 import androidx.annotation.RequiresApi
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.viewpager2.widget.ViewPager2
@@ -17,6 +22,7 @@ import hr.foi.rmai.memento.fragments.CompletedFragment
 import hr.foi.rmai.memento.fragments.NewsFragment
 import hr.foi.rmai.memento.fragments.PendingFragment
 import hr.foi.rmai.memento.helpers.MockDataLoader
+import hr.foi.rmai.memento.services.TaskDeletionService
 
 class MainActivity : AppCompatActivity() {
     lateinit var tabLayout : TabLayout
@@ -51,6 +57,21 @@ class MainActivity : AppCompatActivity() {
         MockDataLoader.loadMockData()
 
         createNotificationChannel()
+        activateTaskDeletionService()
+    }
+
+    private fun activateTaskDeletionService() {
+        val intent = Intent(this, TaskDeletionService::class.java)
+        val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        val pendingIntent = PendingIntent.getService(this, 0,
+                            intent, PendingIntent.FLAG_IMMUTABLE)
+
+        alarmManager.setRepeating(
+            AlarmManager.ELAPSED_REALTIME,
+            SystemClock.elapsedRealtime() + 15 * 60 * 1000,
+            15 * 60 * 1000,
+            pendingIntent
+        )
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
