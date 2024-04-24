@@ -38,6 +38,15 @@ class MainActivity : AppCompatActivity() {
         initializeMainPagerAdapter()
         connectViewPagerWithLayout()
 
+        connectNavDrawerWithViewPager()
+
+        TasksDatabase.buildInstance(applicationContext)
+        MockDataLoader.loadMockData()
+
+        prepareServices()
+    }
+
+    private fun connectNavDrawerWithViewPager() {
         navDrawerLayout = findViewById(R.id.nav_drawer_layout)
         navView = findViewById(R.id.nav_view)
 
@@ -51,11 +60,6 @@ class MainActivity : AppCompatActivity() {
             navDrawerLayout.closeDrawers()
             return@setNavigationItemSelectedListener true
         }
-
-        TasksDatabase.buildInstance(applicationContext)
-        MockDataLoader.loadMockData()
-
-        prepareServices()
     }
 
     private fun prepareServices() {
