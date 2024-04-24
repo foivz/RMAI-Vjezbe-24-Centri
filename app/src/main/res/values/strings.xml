@@ -13,11 +13,8 @@
     <string name="news_ws_err_msg">News are currently not available. Please, try again later.</string>
     <string name="task_countdown">Task countdown</string>
     <string name="task_has_timer">Task has a timer</string>
-    <string name="sync_wear_os">Sync Wear OS</string>
+    <string name="task_mark_as_completed">Mark as completed</string>
+    <string name="task_delete">Delete task</string>
     <string name="tasks_created">Tasks created:</string>
-    <string name="preferences_force_dark_mode">Force dark mode</string>
-    <string name="preferences_application_language">Application language</string>
-    <string name="preferences_template_task_name">Template task name</string>
-    <string name="preferences_default_task_name_summary">Set a default task name to be automatically entered when new task is being created.</string>
-    <string name="settings_menu_item">Settings</string>
+    <string name="cancel">Cancel</string>
 </resources>
