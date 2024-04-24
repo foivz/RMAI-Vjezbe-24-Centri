@@ -31,7 +31,6 @@ class MainActivity : AppCompatActivity() {
     lateinit var navDrawerLayout : DrawerLayout
     lateinit var navView : NavigationView
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -56,6 +55,10 @@ class MainActivity : AppCompatActivity() {
         TasksDatabase.buildInstance(applicationContext)
         MockDataLoader.loadMockData()
 
+        prepareServices()
+    }
+
+    private fun prepareServices() {
         createNotificationChannel()
         activateTaskDeletionService()
     }
@@ -74,10 +77,12 @@ class MainActivity : AppCompatActivity() {
         )
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     private fun createNotificationChannel() {
-        val channel = NotificationChannel("task-timer",
-                        "Task Timer Channel", NotificationManager.IMPORTANCE_HIGH)
+        val channel = NotificationChannel(
+            "task-timer",
+            "Task Timer Channel",
+            NotificationManager.IMPORTANCE_HIGH
+        )
         val notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
         notificationManager.createNotificationChannel(channel)
     }
