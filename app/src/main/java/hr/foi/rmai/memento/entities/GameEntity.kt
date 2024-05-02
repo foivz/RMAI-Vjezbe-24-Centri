@@ -14,6 +14,9 @@ abstract class GameEntity(context: Context, width: Int, height: Int) {
     var maxY = 0
     var minY = 0
 
+    public var speed = 0
+    public var playerSpeed = 0
+
     init {
         maxX = width
         maxY = height

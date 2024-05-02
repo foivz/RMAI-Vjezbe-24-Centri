@@ -6,7 +6,6 @@ import java.util.Random
 class SpaceDustEntity(context: Context, width: Int, height: Int):
     GameEntity(context, width, height) {
 
-    var speed = 0
     val generator = Random()
 
     init {
