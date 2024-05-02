@@ -16,6 +16,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Memento"
         tools:targetApi="31">
+        <activity
+            android:name=".GameActivity"
+            android:exported="false" />
+
         <service
             android:name=".services.TaskDeletionService"
             android:enabled="true"

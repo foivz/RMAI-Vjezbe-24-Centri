@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.SystemClock
 import android.view.MenuItem
+import android.widget.Button
 import androidx.annotation.RequiresApi
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.viewpager2.widget.ViewPager2
@@ -33,6 +34,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var mainPagerAdapter : MainPagerAdapter
     lateinit var navDrawerLayout : DrawerLayout
     lateinit var navView : NavigationView
+    lateinit var btnStartGame: Button
 
     lateinit var onSharedPreferenceChangeListener: OnSharedPreferenceChangeListener
 
@@ -49,6 +51,15 @@ class MainActivity : AppCompatActivity() {
         MockDataLoader.loadMockData()
 
         prepareServices()
+        connectGameButton()
+    }
+
+    private fun connectGameButton() {
+        btnStartGame = findViewById(R.id.btnStartGame)
+        btnStartGame.setOnClickListener {
+            val intent: Intent = Intent(this, GameActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     private fun connectNavDrawerWithViewPager() {
