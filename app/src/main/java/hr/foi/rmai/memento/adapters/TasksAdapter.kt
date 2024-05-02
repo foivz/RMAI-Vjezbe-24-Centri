@@ -2,17 +2,21 @@ package hr.foi.rmai.memento.adapters
 
 import android.app.AlertDialog
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.SurfaceView
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.graphics.toColorInt
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.snackbar.Snackbar
 import hr.foi.rmai.memento.R
 import hr.foi.rmai.memento.database.TasksDatabase
 import hr.foi.rmai.memento.entities.Task
+import hr.foi.rmai.memento.helpers.DeletedTaskRecovery
 import hr.foi.rmai.memento.services.TaskTimerService
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -62,7 +66,26 @@ class TasksAdapter(val tasksList : MutableList<Task>,
 
                 val alertDialogBuilder = AlertDialog.Builder(view.context)
                     .setNegativeButton("Delete task") { _, _ ->
-                        TasksDatabase.getInstance().getTasksDao().removeTask(currentTask)
+                        DeletedTaskRecovery.pushTask(currentTask, view.context.cacheDir)
+
+                        val tasksDao = TasksDatabase.getInstance().getTasksDao()
+                        val snack =
+                            Snackbar
+                                .make(view, "Revert?", Snackbar.LENGTH_LONG)
+                                .setAction("Recover") { view ->
+                                    try {
+                                        val poppedTaskId =
+                                            DeletedTaskRecovery.popTask(view.context.cacheDir)
+                                        val restoredTask = tasksDao.getTask(poppedTaskId)
+                                        addTask(restoredTask)
+                                    } catch (ex: Exception) {
+                                        Toast.makeText(view.context, ex.message, Toast.LENGTH_LONG)
+                                            .show()
+                                    }
+                                }
+                        snack.show()
+                        tasksDao.removeTask(currentTask)
+
                         removeTaskFromList()
                     }
                     .setNeutralButton("Cancel") { dialog, _ ->
